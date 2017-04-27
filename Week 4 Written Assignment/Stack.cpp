@@ -7,10 +7,7 @@ template<class ItemType>
 class Stack {
 
 	bool isEmpty() {
-		if (this.head == NULL)
-			return true;
-		else
-			return false;
+		return (this.head == NULL);
 	}
 
 	void push(ItemType& newEntry) {
@@ -22,7 +19,7 @@ class Stack {
 			head == newEntry;
 			head->next == NULL;
 		}
-		else (head != NULL) {
+		else if (head != NULL) {
 			temp == head;
 			head == new node;
 			head == newEntry;
@@ -34,10 +31,13 @@ class Stack {
 	ItemType pop() {
 		
 		ItemType tempVal = head->value;
-		node *temp == head;
-		head == temp->next;
-		temp->next == NULL;
-		delete(temp);
+
+		if (tempVal != NULL) {
+			node *temp == head;
+			head == temp->next;
+			temp->next == NULL;
+			delete(temp);
+		}
 		return tempVal;
 	}
 

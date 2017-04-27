@@ -25,7 +25,7 @@ void Calculator(string input) {
 
 		switch (input[i]) {
 			
-		case IsNumeric(input[i]):
+		case IsNumeric(input):
 
 			valStack->push(input[i]);
 				break;
@@ -35,7 +35,7 @@ void Calculator(string input) {
 			opStack->push(input[i]);
 				break;
 
-		case IsOperator(input[i]):
+		case IsOperator(input):
 
 			if (opStack->isEmpty())
 				opStack->push(input[i]);
@@ -76,25 +76,25 @@ void Execute(Stack<int> &i, Stack<char> &c) {
 	
 	switch (op)
 	{
-	case '+': result == operand1 + operand2;
+	case '+': result = operand1 + operand2;
 		break;
 
-	case '-': result == operand1 - operand2;
+	case '-': result = operand1 - operand2;
 		break;
 
-	case '/': result == operand1 / operand2;
+	case '/': result = operand1 / operand2;
 		break;
 
-	case '*': result == operand1 * operand2;
+	case '*': result = operand1 * operand2;
 		break;
 	};
 	valStack.push(result);
 }
 
 int Precedence(char ch) {
-	int paran = 5;
-	int multdiv = 3;
-	int addsub = 1;
+	int paran = 1;
+	int addsub = 3;
+	int multdiv = 5;
 
 	switch (ch) {
 
@@ -126,7 +126,8 @@ bool IsOperator(string input)
 	bool verify = true;
 	for (int i = 0; i < input.length(); i++)
 	{
-		if (input[i] == '+' || input[i] == '-' || input[i] == '/' || input[i] == '*')
+		char op = input[i];
+		if (op == '+' || op == '-' || op == '/' || op == '*')
 			verify = true;
 		else
 			verify = false;
@@ -139,7 +140,9 @@ bool IsNumeric(string input)
 	bool verify = true;
 	for (int i = 0; i < input.length(); i++)
 	{
-		if (input[i] >= 0 || input[i] <= 10)
+		int numeric = input[i];
+
+		if (numeric >= 0 || numeric <= 10)
 			verify = true;
 		else
 			verify = false;
