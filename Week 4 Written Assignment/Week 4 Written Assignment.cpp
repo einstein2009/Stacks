@@ -17,8 +17,8 @@ int Precedence(char ch);
 //bool IsOperator(string input);
 
 void Calculator(string input) {
-	Stack<int>* valStack = new Stack<int>();
-	Stack<char>* opStack = new Stack<char>();
+	Stack<int> valStack = Stack<int>();
+	Stack<char> opStack = Stack<char>();
 	int result = 0;
 
 	for (int i = 0; i < input.length; i++) {
@@ -34,39 +34,39 @@ void Calculator(string input) {
 		case '6':
 		case '7':
 		case '8':
-		case '9': valStack->push(input[i]);
+		case '9': valStack.push(input[i]);
 			break;
 
 		case '(':
-			opStack->push(input[i]);
+			opStack.push(input[i]);
 				break;
 
 		case '+':
 		case '-':
 		case '*':
 		case '/':
-			if (opStack->isEmpty())
-				opStack->push(input[i]);
-			else if (Precedence(input[i]) > Precedence(opStack->peek()))
-				opStack->push(input[i]);
+			if (opStack.isEmpty())
+				opStack.push(input[i]);
+			else if (Precedence(input[i]) > Precedence(opStack.peek()))
+				opStack.push(input[i]);
 			else {
-				while (!opStack->isEmpty() && Precedence(input[i]) <= Precedence(opStack->peek()))
-					Execute();
-				opStack->push(input[i]);
+				while (!opStack.isEmpty() && Precedence(input[i]) <= Precedence(opStack.peek()))
+					Execute(valStack, opStack);
+				opStack.push(input[i]);
 			}
 				break;
 
 		case ')':
 
-			while (opStack->peek() == '(')
-				Execute();
-			opStack->pop();
+			while (opStack.peek() == '(')
+				Execute(valStack, opStack);
+			opStack.pop();
 				break;
 		}
 	}
-	while (!opStack->isEmpty()) {
-		Execute();
-		result = valStack->peek();
+	while (!opStack.isEmpty()) {
+		Execute(valStack, opStack);
+		result = valStack.peek();
 	}
 };
 
